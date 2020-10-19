@@ -8,7 +8,7 @@ def flying_objects_config():
   cfg.training_data_dir = "../data/FlyingObjectDataset_10K/training"
   cfg.validation_data_dir = "../data/FlyingObjectDataset_10K/validation"
   cfg.testing_data_dir = "../data/FlyingObjectDataset_10K/testing"
-  cfg.fineGrained = False
+  cfg.fineGrained = True
 
   if cfg.fineGrained:
       # classes
