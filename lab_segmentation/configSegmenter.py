@@ -10,28 +10,31 @@ def flying_objects_config():
   cfg.testing_data_dir = "../data/FlyingObjectDataset_10K/testing"
   cfg.fineGrained = False
 
+  cfg.defaultClasses = [
+      'square',
+      'triangle',
+      'circular']
+
+  cfg.fineGrainedClasses = [
+      'square_red',
+      'square_green',
+      'square_blue',
+      'square_yellow',
+      'triangle_red',
+      'triangle_green',
+      'triangle_blue',
+      'triangle_yellow',
+      'circular_red',
+      'circular_green',
+      'circular_blue',
+      'circular_yellow']
+
   if cfg.fineGrained:
       # classes
-      cfg.CLASSES = [
-          'square_red',
-          'square_green',
-          'square_blue',
-          'square_yellow',
-          'triangle_red',
-          'triangle_green',
-          'triangle_blue',
-          'triangle_yellow',
-          'circular_red',
-          'circular_green',
-          'circular_blue',
-          'circular_yellow']
+      cfg.CLASSES = cfg.fineGrainedClasses
   else:
       # classes
-      cfg.CLASSES = [
-          'square',
-          'triangle',
-          'circular',
-          'background']
+      cfg.CLASSES = cfg.defaultClasses
 
   cfg.NUM_CLASS = len(cfg.CLASSES)    # number of classes
 

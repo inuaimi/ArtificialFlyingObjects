@@ -15,9 +15,9 @@ def get_dataset_size(data_folder):
 def get_dataset_size_h5(file, set):
     return file[set].shape[0]
 
-def generate_classification_batches_h5(file, set, batch_size):
+def generate_classification_batches_h5(file, set, batch_size, fineGrained=False):
     set_x = set + '_x'
-    set_y = set + '_y'
+    set_y = set + '_y_finegrained' if fineGrained else  set + '_y'
     n_image = file[set_x].shape[0]
 
     while True:

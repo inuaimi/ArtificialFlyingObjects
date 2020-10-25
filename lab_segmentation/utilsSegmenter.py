@@ -12,6 +12,10 @@ def get_dataset_size(data_folder):
     images = glob(os.path.join(data_folder, 'image', '*.png'))
     return len(images)
 
+def get_dataset_size_h5(file, set):
+    return file[set].shape[0]
+
+
 def generate_classification_batches(data_folder, image_shape, batch_size, classes, fineGrained=False):
     images = glob(os.path.join(data_folder, 'image', '*.png'))
     n_image = len(images)
@@ -74,6 +78,44 @@ def generate_augmented_segmentation_batches(in_gen, image_gen):
 
         yield aug_img / 255 , aug_lab
 
+def generate_segmentation_batches_h5(file, set, batch_size):
+
+    set_x = set + '_x'
+    set_y = set + '_y_segmentation'
+    n_image = file[set_x].shape[0]
+
+    # this line is just to make the generator infinite, keras needs that
+    while True:
+
+        # Randomize the indices to make an array
+        indices_arr = np.random.permutation(n_image)
+        for batch in range(0, len(indices_arr), batch_size):
+            # slice out the current batch according to batch-size
+            current_batch = indices_arr[batch:(batch + batch_size)]
+
+
+            # initializing the arrays, x_train and y_train
+            x_train = []  # np.empty([0, image_shape[0],image_shape[1],image_shape[2]], dtype=np.float32)
+            y_train = []
+
+            for i in current_batch:
+
+                image = file[set_x][i][...]
+                gt_image = file[set_y][i][...]
+
+                # Appending them to existing batch
+                x_train.append(image)  # x_train = np.append(x_train, [image], axis=0)
+                y_train.append(gt_image)
+            # y_train = to_categorical(y_train, num_classes=len(classes))
+
+            batch_images = np.array(x_train)
+            batch_lables = np.array(y_train)
+            # normalize image data (not the labels)
+            batch_images = batch_images.astype('float32')
+            batch_lables = batch_lables.astype('float32') / 255
+
+            yield (batch_images, batch_lables)
+
 def generate_segmentation_batches(data_folder, image_shape, batch_size):
 
     images = glob(os.path.join(data_folder, 'image', '*.png'))
@@ -128,7 +170,7 @@ def generate_segmentation_batches(data_folder, image_shape, batch_size):
             # normalize image data (not the labels)
             batch_images = batch_images.astype('float32') 
             batch_lables = batch_lables.astype('float32') / 255
-
+            print(batch_images.shape, batch_lables.shape)
             yield (batch_images, batch_lables)
 
 def show_statistics(data_folder, fineGrained=False, title="Input Data Statistics"):
