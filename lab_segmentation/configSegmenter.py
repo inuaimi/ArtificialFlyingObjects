@@ -11,23 +11,24 @@ def flying_objects_config():
   cfg.fineGrained = False
 
   cfg.defaultClasses = [
-      'square',
-      'triangle',
-      'circular']
+          'square',
+          'triangle',
+          'circular',
+          'background']
 
   cfg.fineGrainedClasses = [
-      'square_red',
-      'square_green',
-      'square_blue',
-      'square_yellow',
-      'triangle_red',
-      'triangle_green',
-      'triangle_blue',
-      'triangle_yellow',
-      'circular_red',
-      'circular_green',
-      'circular_blue',
-      'circular_yellow']
+          'square_red',
+          'square_green',
+          'square_blue',
+          'square_yellow',
+          'triangle_red',
+          'triangle_green',
+          'triangle_blue',
+          'triangle_yellow',
+          'circular_red',
+          'circular_green',
+          'circular_blue',
+          'circular_yellow']
 
   if cfg.fineGrained:
       # classes

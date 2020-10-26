@@ -170,7 +170,6 @@ def generate_segmentation_batches(data_folder, image_shape, batch_size):
             # normalize image data (not the labels)
             batch_images = batch_images.astype('float32') 
             batch_lables = batch_lables.astype('float32') / 255
-            print(batch_images.shape, batch_lables.shape)
             yield (batch_images, batch_lables)
 
 def show_statistics(data_folder, fineGrained=False, title="Input Data Statistics"):
